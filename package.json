@@ -15,7 +15,8 @@
     "react-dom": "^18",
     "sass": "^1.71.1",
     "scss": "^0.2.4",
-    "survey-react-ui": "^1.9.131"
+    "survey-react-ui": "^1.9.131",
+    "zustand": "^4.5.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",
