@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react';
+import { useState ,useEffect} from 'react';
 
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import { MainContainer, ChatContainer, MessageList, Message, MessageInput, TypingIndicator } from '@chatscope/chat-ui-kit-react';
@@ -14,6 +14,7 @@ const systemMessage = { //  Explain things like you're talking to a software pro
 }
 
 const story = () => {
+
 
   const [messages, setMessages] = useState([
     {
@@ -82,29 +83,28 @@ const story = () => {
       body: JSON.stringify(apiRequestBody)
     }).then((data) => {
       return data.json();
-    }).then((data) => {
+    }).then(async (data) => {
       console.log(data);
       setMessages([...chatMessages, {
         message: data.choices[0].message.content,
         sender: "ChatGPT"
       }]);      
       let newMessagePartss = splitText(data.choices[0].message.content)
-      newMessagePartss.map((part,i) => {
-        console.log("ethu parts",part)
-        console.log("ethu index",i)
-
-        if (i === 0){
+      const generatedUrls = [];
+      let count = 0
+      for (const part of newMessagePartss) {
+        if (count === 0){
           console.log("chumma")
+          count+=1
         }
         else{
-          generateImage(part)
+          console.log("newMessagePartss",newMessagePartss)
+          console.log("part",part)
+          const urlData = await generateImage(part);
+          generatedUrls.push(urlData);
         }
-      })
-      
-
-      // console.log(newMessageParts);
-      
-
+      }
+      setImgUrl(generatedUrls);      
       setIsTyping(false);
     });
   }
@@ -121,19 +121,26 @@ const story = () => {
   })
 
 
-  const generateImage = async(prompt) => {
+  const generateImage = async (prompt) => {
+    console.log("img prompt----------", prompt);
     const imageParameters = {
         model: "dall-e-2",
         prompt: prompt,
-        n:1,
-        size:"256x256"
+        n: 1,
+        size: "256x256"
     }
-    const response = await openai.images.generate(imageParameters)
-    const urlData = response.data[0].url
-    const imgUrls = [...imgUrl, urlData]
-    setImgUrl(imgUrls)
-    
-  }
+    const response = await openai.images.generate(imageParameters);
+    const urlData = response.data[0].url;
+
+
+    // Collect all the generated URLs in a new array
+    const newImgUrls = [...imgUrl, urlData];
+    console.log("use state--------", newImgUrls);
+    console.log("new call ----", urlData);
+
+    // Update the state with all the URLs at once
+    return response.data[0].url;
+}
 
   
     function splitText(text){
@@ -142,52 +149,35 @@ const story = () => {
       return parts;
     }
 
-    let partList = [""]
+    
     
   return (
     <>
       <div className="grid h-screen place-items-center">
       <h2>Learning Assistance For Children With Autism</h2>
-      <div style={{ position:"relative", height: "500px", width: "700px" }}>
+      <div style={{ position:"relative", height: "800px", width: "1200px" }}>
         <MainContainer>
           <ChatContainer>       
             <MessageList 
               scrollBehavior="smooth" 
               typingIndicator={isTyping ? <TypingIndicator content="Learning assistant is typing" /> : null}
             >
-              {messages.map((message, i) => {
-                console.log(message.message)
-                // const text = {}
-                // if(message.message.length > 100){
-                //   const text = message
-                //   console.log("inside if")
-                // } else {
-                //   console.log("lolfofnfjfdjdjj")
-                // }
-                return(<>
-                    <Message key={i} model={message} />
-                    {imgUrl && imgUrl?.map((url,k)=>{
-                      <>
-                        <p key={k}>{url}</p>
-                      </>
-                    }) }
-                    {/* {message?.message?.length>100 && (partList = splitText(message.message))} */}
-
-                    {/* {
-                      partList.map((part, k)=>{
-                        setUserPrompt(part)
-                        const url = generateImage(userPrompt);
+              {messages.map((message, i) => {                
+                return(
                         <>
-                          {url && <img key = {k} src={url}  alt="demo-img"/>}
+                          <Message key={i} model={message} />                                      
                         </>
-                      })
-                    } */}
-
-
-                    </>)
+                    )
               })}
 
-              <img src="next.svg" className='mt-5'/>
+              {imgUrl && imgUrl.map((url,k)=>{
+                return(                    
+                        <div key={k}>                          
+                          <img src={url} alt="demo-img"/>
+                        </div>                      
+                )
+              })}
+              
             </MessageList>
             <MessageInput placeholder="Type message here" onSend={handleSend} />        
           </ChatContainer>
@@ -195,10 +185,7 @@ const story = () => {
       </div>
     </div>
 
-    <div>
-        
-        {imgUrl && <img src={imgUrl} alt="demo-img"/>}
-    </div>
+    
       
     </>
     
