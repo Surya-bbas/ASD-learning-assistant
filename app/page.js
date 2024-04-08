@@ -1,9 +1,6 @@
 "use client";
-import Image from "next/image";
 import "survey-core/defaultV2.min.css";
-import { Model } from "survey-core";
-import { Survey } from "survey-react-ui";
-import { useCallback, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { useUserLoginStore } from "./globalState";
 import { useRouter } from "next/navigation";
 import {
@@ -59,14 +56,7 @@ export default function Home() {
       <>
          <div className="flex justify-center items-center min-h-screen bg-gray-50">
             <div>
-               <button
-                  onClick={() => {
-                     signOut(auth);
-                  }}
-               >
-                  SignOut
-               </button>
-
+               
                {newRegister ? (
                   <section class="bg-gray-50 dark:bg-gray-900">
                      <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 flex lg:grid-cols-2 gap-8 lg:gap-16 justify-center items-center">
@@ -156,12 +146,10 @@ export default function Home() {
                               We invest in the world’s potential
                            </h1>
                            <p class="mb-6 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
-                              Here at Flowbite we focus on markets where
-                              technology, innovation, and capital can unlock
-                              long-term value and drive economic growth.
+                           Autism is a unique way of experiencing the world. The Learning Assistant is designed to support children with autism in their learning journey by providing personalized assistance and a safe, engaging environment.
                            </p>
                            <a
-                              href="#"
+                              href="https://www.who.int/news-room/fact-sheets/detail/autism-spectrum-disorders"
                               class="text-blue-600 dark:text-blue-500 hover:underline font-medium text-lg inline-flex items-center"
                            >
                               Read more about ASD

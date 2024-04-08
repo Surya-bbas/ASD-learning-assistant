@@ -1,37 +1,50 @@
 "use client"
-import Image from "next/image";
 import 'survey-core/defaultV2.min.css';
-import {Model} from 'survey-core'
-import {Survey} from "survey-react-ui"
-import { useCallback, useState } from 'react';
 import { useUserLoginStore } from "../globalState";
 import { useRouter } from 'next/navigation'
 
-import tailwindConfig from "@/tailwind.config";
 
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+
+
+
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import "./home.scss"
+import { getAuth, signOut } from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
 
 export default function Home() {
   //variables
-  const AgreeQuestion = ["question1", "question7", "question8", "question10"]
-  const DisAgreeQuestion = ["question2", "question3", "question4", "question5", "question6", "question9"]
+  
   //State
   const user = useUserLoginStore((state) => state.user);
+  const firebaseConfig = {
+    apiKey: "AIzaSyAaP6jyNYQfbYEum1NsvRc9HLAGSJPawU4",
+    authDomain: "final-year-asd-project.firebaseapp.com",
+    projectId: "final-year-asd-project",
+    storageBucket: "final-year-asd-project.appspot.com",
+    messagingSenderId: "445141611612",
+    appId: "1:445141611612:web:b497a5e3a2d77193502299",
+ };
+ const app = initializeApp(firebaseConfig);
+
   
   
   //Router
 
   const router = useRouter()
+  const auth = getAuth();
+
 
 
 
   return(
-    <>
-      <p>{user}</p>
+    <>      
       <div className="homepage">
-        <header className="header">
-        <h1>Welcome to Learning Assistant Application</h1>
+        <header className="header flex justify-between">
+          <h1 className="justify-self-center text-xl">Welcome to Learning Assistant Application <span className='text-orange-400 font-bold'>{user}</span></h1>
+          <button className=" justify-self-end border-2 px-3 py-1 rounded"onClick={() => {
+                     signOut(auth).then(()=>router.push('/'));
+                  }}>Sign Out</button>
         </header>
         <main className="main-content">
         <section className="section app-info">

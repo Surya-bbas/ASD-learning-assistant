@@ -5,6 +5,7 @@ import "./page.scss"
 
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import { MainContainer, ChatContainer, MessageList, Message, MessageInput, TypingIndicator } from '@chatscope/chat-ui-kit-react';
+import { useUserLoginStore } from '../globalState';
 
 const API_KEY = process.env.NEXT_PUBLIC_SECRET_KEY;
 
@@ -14,10 +15,12 @@ const systemMessage = { //  Explain things like you're talking to a software pro
 }
 
 const page = () => {
+  const user = useUserLoginStore((state) => state.user);
+
 
   const [messages, setMessages] = useState([
     {
-      message: "Hello, I'm your learning assistant! what shall we learn today?!",
+      message: `Hello, ${user} I'm your learning assistant! what shall we learn today?!`,
       sentTime: "just now",
       sender: "ChatGPT"
     }
