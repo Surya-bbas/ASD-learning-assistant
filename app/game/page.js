@@ -62,7 +62,7 @@ const page = () => {
     // and the messages which we formatted above. We add a system message in the front to'
     // determine how we want chatGPT to act. 
     const apiRequestBody = {
-      "model": "gpt-3.5-turbo",
+      "model": "gpt-4-turbo-preview",
       "messages": [
         systemMessage,  // The system message DEFINES the logic of our chatGPT
         ...apiMessages // The messages from our chat with ChatGPT
@@ -92,8 +92,11 @@ const page = () => {
   return (
     <>
       <div className="grid h-screen place-items-center">
-      <h2>Learning Assistance For Children With Autism</h2>
-      <div style={{ position:"relative", height: "800px", width: "700px" }}>
+      <div className='flex flex-col justify-center items-center gap-4'>
+        <h2>Learning Assistance For Children With Autism</h2>
+        <h2>Experiential Learning</h2>
+      </div>
+      <div style={{ position:"relative", height: "800px", width: "1200px" }}>
         <MainContainer>
           <ChatContainer>       
             <MessageList 

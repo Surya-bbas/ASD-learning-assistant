@@ -66,7 +66,7 @@ const story = () => {
     // and the messages which we formatted above. We add a system message in the front to'
     // determine how we want chatGPT to act. 
     const apiRequestBody = {
-      "model": "gpt-3.5-turbo",
+      "model": "gpt-4-turbo-preview",
       "messages": [
         systemMessage,  // The system message DEFINES the logic of our chatGPT
         ...apiMessages // The messages from our chat with ChatGPT
@@ -124,10 +124,10 @@ const story = () => {
   const generateImage = async (prompt) => {
     console.log("img prompt----------", prompt);
     const imageParameters = {
-        model: "dall-e-2",
+        model: "dall-e-3",
         prompt: prompt,
         n: 1,
-        size: "256x256"
+        size: "1024x1024"
     }
     const response = await openai.images.generate(imageParameters);
     const urlData = response.data[0].url;
@@ -154,7 +154,11 @@ const story = () => {
   return (
     <>
       <div className="grid h-screen place-items-center">
-      <h2>Learning Assistance For Children With Autism</h2>
+      
+      <div className='flex flex-col justify-center items-center gap-4'>
+        <h2>Learning Assistance For Children With Autism</h2>
+        <h2>Story Learning</h2>
+      </div>
       <div style={{ position:"relative", height: "800px", width: "1200px" }}>
         <MainContainer>
           <ChatContainer>       
@@ -173,7 +177,7 @@ const story = () => {
               {imgUrl && imgUrl.map((url,k)=>{
                 return(                    
                         <div key={k}>                          
-                          <img src={url} alt="demo-img"/>
+                          <img src={url} alt="demo-img" width={512} height={512}/>
                         </div>                      
                 )
               })}
