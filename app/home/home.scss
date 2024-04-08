@@ -1,0 +1,88 @@
+.homepage {
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  background-color: #007bff;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+.main-content {
+  padding: 20px;
+}
+
+.section {
+  margin-bottom: 60px;
+  animation: fade-in 1s ease;
+  
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.section h2 {
+  color: #007bff;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.section p {
+  line-height: 1.6;
+}
+
+.content-wrapper {
+  padding: 20px;
+}
+
+.illustration img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.footer {
+  background-color: #007bff;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.pic{
+  width: 150px;
+}
+
+main{
+  padding: 20px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+}
+
+.illustration{
+  display: flex;
+  justify-content: space-around;
+}
